@@ -1,0 +1,88 @@
+@using System.Linq;
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "Xe";
+
+    var cars = ViewBag.Cars as List<Car>;
+}
+
+<!-- Card deck -->
+     <div class="text-right mb-2">
+         <a href="/admin/car/create" class="btn btn-primary btn-sm">
+             Thêm xe
+         </a>
+     </div>
+<div class="card-deck">
+    <div class="row w-100">
+        @foreach (var item in cars)
+        {
+            <div class="col-4">
+                <div class="card mb-4">
+
+                    <!--Card image-->
+                    <div class="view overlay">
+                    <img class="card-img-top" src="@item.Thumbnail"
+                        alt="Card image cap" height="280px">
+                    <a href="car/@item.Id">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body">
+                    <!--Title-->    
+                    <h4 class="card-title">Car #@item.CarCode </h4>
+                    <!--Text-->
+                    <p class="card-text">@item.Description</p>
+                    <p class="card-text"><span class="d-inline-block" > Lái xe: 
+                        @if(item.Employees.Count() > 0 ){
+                            @item.Employees.First().FullName
+                        }
+                        else{
+                           <span>Chưa có người phụ trách</span>
+                        }
+                         </span> </p>
+                    <p class="card-text"><span class="d-inline-block" > Phụ xe: 
+                        
+                         @if(item.Employees.Count() > 1 ){
+                            @item.Employees.Last().FullName
+                        }
+                        else{
+                           <span>Chưa có người phụ trách</span>
+                        }
+                         </span> </p>
+                    @* <p class="card-text"><span class="d-inline-block" > Thời gian: @item.Updated_At.ToString("hh:mm:i dd/MM/yyyy")</span></p> *@
+                    @* <p class="card-text"><span class="d-inline-block" > Hành trình:  </span> Đà Nẵng Hà Nội</p> *@
+                    <p class="card-text"><span class="d-inline-block" > Trạng thái: </span> 
+                        @switch (item.StatusCar)
+                        {
+                            case StatusCar.Maintenance: <span>Đang bảo trì</span>
+                            break;
+                            
+                            case StatusCar.Running: <span>Đang chạy</span>
+                            break;
+                            
+                            case StatusCar.Ready: <span>Chờ xuất phát</span>
+                            break;
+                            
+                        }
+                    </p>
+                    <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                    <a href="car/@item.Id" class="btn btn-light-blue btn-md">Chi tiết</a>
+
+                    </div>
+
+                </div>
+            </div>
+            
+        }
+    </div>
+
+  <!-- Card -->
+
+  <!-- Card -->
+
+
+
+</div>
+<!-- Card deck -->
